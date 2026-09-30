@@ -1,0 +1,11 @@
+old_url,new_url,status,notes
+/kamerarendszer-telepites-szekesfehervar,/kamerarendszer-telepites,301,canonical rename
+/kamerarendszer-javitas-szekesfehervar,/kamerarendszer-javitas,301,canonical rename
+/kamerarendszer-bovites,/kamerarendszer-javitas,301,bovites folded into javitas page
+/ip-kamerarendszer,/,301,topic page removed; no doorway
+/uzleti-kamerarendszer,/uzlet-telephely,301,use-case rename
+/otthoni-kamerarendszer,/csaladi-haz-nyaralo,301,use-case rename
+/riaszto-es-beleptetes,/,301,forbidden service removed
+/adatkezeles,/adatvedelem,301,legal path rename
+/,/,200,canonical home
+/aszf,/aszf,200,unchanged path

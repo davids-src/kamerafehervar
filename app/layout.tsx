@@ -1,62 +1,52 @@
 import './globals.css';
-import '@fontsource/archivo/700.css';
-import '@fontsource/archivo/800.css';
-import '@fontsource/ibm-plex-sans/400.css';
-import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/source-sans-3/400.css';
+import '@fontsource/source-sans-3/500.css';
+import '@fontsource/source-sans-3/600.css';
+import '@fontsource/source-sans-3/700.css';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { CookieBanner } from '@/components/CookieBanner';
 import { GA_MEASUREMENT_ID } from '@/lib/gtag';
-
-const siteUrl = 'https://kamerafehervar.hu';
+import { SITE_URL } from '@/lib/routes';
 
 export const metadata: Metadata = {
-  title: 'Kamerarendszer telepítés és javítás Székesfehérváron | Kamera Fehérvár',
+  title: 'Kamerarendszer Székesfehérváron | Kamera Fehérvár',
   description:
-    'Kamerarendszer telepítés, javítás, bővítés és korszerűsítés Székesfehérváron és Fejér vármegyében. Cégeknek és otthonra, IP és analóg rendszerekhez.',
-  metadataBase: new URL(siteUrl),
+    'Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron. Családi ház, nyaraló, üzlet és telephely.',
+  metadataBase: new URL(SITE_URL),
   alternates: { canonical: '/' },
   icons: {
-    icon: [
-      { url: '/kamerafehervar_logo_new_main.png' },
-      { url: '/kamerafehervar_logo_new_main.png', type: 'image/png' },
-    ],
-    shortcut: '/kamerafehervar_logo_new_main.png',
-    apple: '/kamerafehervar_logo_new_main.png',
+    icon: [{ url: '/kamerafehervar_logo_new.png' }],
+    shortcut: '/kamerafehervar_logo_new.png',
+    apple: '/kamerafehervar_logo_new.png',
   },
   openGraph: {
     type: 'website',
     locale: 'hu_HU',
     siteName: 'Kamera Fehérvár',
-    title: 'Kamerarendszer telepítés és javítás Székesfehérváron | Kamera Fehérvár',
+    title: 'Kamerarendszer Székesfehérváron | Kamera Fehérvár',
     description:
-      'Kamerarendszer telepítés, javítás, bővítés és korszerűsítés Székesfehérváron és Fejér vármegyében. Ingyenes helyszíni felmérés.',
-    url: siteUrl,
-    images: [{ url: `${siteUrl}/kamerafehervar_logo_new.png` }],
+      'Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron. Családi ház, nyaraló, üzlet és telephely.',
+    url: SITE_URL,
+    images: [{ url: `${SITE_URL}/kamerafehervar_logo_new.png` }],
   },
   robots: { index: true, follow: true },
 };
 
-const jsonLdHomepage = [
+const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    '@id': `${siteUrl}/#service`,
+    '@id': `${SITE_URL}/#service`,
     name: 'Kamera Fehérvár',
     description:
-      'Biztonsági kamerarendszerek kiépítése, javítása és karbantartása Székesfehérváron és Fejér vármegyében.',
+      'Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron és Fejér vármegyében.',
     telephone: '+36702735532',
     email: 'szia@kamerafehervar.hu',
-    url: siteUrl,
+    url: SITE_URL,
     areaServed: [
-      {
-        '@type': 'City',
-        name: 'Székesfehérvár',
-      },
-      {
-        '@type': 'AdministrativeArea',
-        name: 'Fejér vármegye',
-      },
+      { '@type': 'City', name: 'Székesfehérvár' },
+      { '@type': 'AdministrativeArea', name: 'Fejér vármegye' },
     ],
     address: {
       '@type': 'PostalAddress',
@@ -67,24 +57,18 @@ const jsonLdHomepage = [
     },
     provider: {
       '@type': 'Organization',
-      name: 'SIROTECH Informatikai és Biztonságtechnikai Kft.',
+      name: 'SIROTECH Kft.',
       vatID: '33056151-2-07',
       registrationNumber: 'Cg. 07-09-037603',
-    },
-    openingHoursSpecification: {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '08:00',
-      closes: '20:00',
     },
   },
   {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    '@id': `${siteUrl}/#organization`,
+    '@id': `${SITE_URL}/#organization`,
     name: 'SIROTECH Kft. (Kamera Fehérvár)',
-    url: siteUrl,
-    logo: `${siteUrl}/kamerafehervar_logo_new.png`,
+    url: SITE_URL,
+    logo: `${SITE_URL}/kamerafehervar_logo_new.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+36702735532',
@@ -96,22 +80,19 @@ const jsonLdHomepage = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${siteUrl}/#website`,
-    url: siteUrl,
+    '@id': `${SITE_URL}/#website`,
+    url: SITE_URL,
     name: 'Kamera Fehérvár',
-    description: 'Kamerarendszer telepítés és javítás Székesfehérváron',
+    description: 'Kamerarendszer Székesfehérváron',
   },
 ];
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaReady = GA_MEASUREMENT_ID && GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX';
+
   return (
     <html lang="hu">
       <head>
-        {/* Google Consent Mode Defaults */}
         <Script id="consent-mode" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -123,9 +104,7 @@ export default function RootLayout({
             });
           `}
         </Script>
-
-        {/* GA4 Script */}
-        {GA_MEASUREMENT_ID && GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX' && (
+        {gaReady && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -138,18 +117,19 @@ export default function RootLayout({
                 gtag('js', new Date());
                 gtag('config', '${GA_MEASUREMENT_ID}', {
                   page_path: window.location.pathname,
+                  anonymize_ip: true
                 });
               `}
             </Script>
           </>
         )}
       </head>
-      <body>
+      <body className="font-sans antialiased">
         {children}
         <CookieBanner />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdHomepage) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </body>
     </html>

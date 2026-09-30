@@ -2,7 +2,9 @@
 
 import { PhoneIcon } from './icons';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { trackPhoneClick, trackCtaClick } from '@/lib/gtag';
+import { PHONE_HREF } from '@/lib/routes';
 
 export function MobileCallBar() {
   const [visible, setVisible] = useState(false);
@@ -20,22 +22,22 @@ export function MobileCallBar() {
         visible ? 'translate-y-0' : 'translate-y-full'
       }`}
     >
-      <div className="flex shadow-[0_-4px_20px_rgba(0,0,0,0.15)]">
+      <div className="flex shadow-[0_-4px_20px_rgba(0,0,0,0.12)]">
         <a
-          href="tel:+36702735532"
+          href={PHONE_HREF}
           onClick={() => trackPhoneClick('mobile_call_bar')}
-          className="flex-1 flex items-center justify-center gap-2 bg-navy text-white py-4 font-display font-bold text-base active:bg-navy-deep"
+          className="flex-1 flex items-center justify-center gap-2 bg-navy text-white py-4 font-semibold text-base active:bg-navy-secondary"
         >
-          <PhoneIcon className="w-5 h-5 text-accent" />
-          Hívás azonnal
+          <PhoneIcon className="w-5 h-5" />
+          Hívás
         </a>
-        <a
-          href="#kapcsolat"
-          onClick={() => trackCtaClick('mobile_call_bar', 'Visszahívást kérek')}
-          className="flex-1 flex items-center justify-center gap-2 bg-accent text-white py-4 font-display font-bold text-base active:bg-accent-hover"
+        <Link
+          href="/kapcsolat"
+          onClick={() => trackCtaClick('mobile_call_bar', 'Ajánlatkérés')}
+          className="flex-1 flex items-center justify-center gap-2 bg-accent text-white py-4 font-semibold text-base active:bg-accent-hover"
         >
-          Visszahívás kérése
-        </a>
+          Ajánlatkérés
+        </Link>
       </div>
     </div>
   );

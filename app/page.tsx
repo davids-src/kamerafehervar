@@ -1,441 +1,317 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { MobileCallBar } from '@/components/MobileCallBar';
-import { Reveal } from '@/components/Reveal';
-import { CrossSellSection } from '@/components/CrossSellSection';
-import { ContactForm } from '@/components/ContactForm';
-import {
-  PhoneIcon,
-  CheckIcon,
-  ArrowRightIcon,
-  WrenchIcon,
-  ClipboardIcon,
-  MapPinIcon,
-  CameraIcon,
-  StoreIcon,
-  HomeIcon,
-  MailIcon,
-  ShieldIcon,
-} from '@/components/icons';
-
-const PHONE = '+36 70 273 5532';
-const PHONE_HREF = 'tel:+36702735532';
+import { SiteShell } from '@/components/SiteShell';
+import { SystemDiagram } from '@/components/SystemDiagram';
+import { CtaLink } from '@/components/CtaLink';
 
 export const metadata: Metadata = {
-  title: 'Kamerarendszer telepítés és javítás Székesfehérváron | Kamera Fehérvár',
+  title: 'Kamerarendszer Székesfehérváron | Kamera Fehérvár',
   description:
-    'Kamerarendszer telepítés, javítás, bővítés és korszerűsítés Székesfehérváron és Fejér vármegyében. Cégeknek és otthonra, IP és analóg rendszerekhez.',
+    'Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron. Családi ház, nyaraló, üzlet és telephely.',
   alternates: { canonical: '/' },
 };
 
-const trustItems = [
+const benefits = [
   {
-    icon: WrenchIcon,
-    title: 'Meglévő rendszert is javítunk',
-    body: 'Nem csak új kamerát telepítünk — a régebbi, analóg vagy elromlott rendszereket is megjavítjuk, bővítjük.',
+    title: 'Távoli rálátás',
+    text: 'A rendszer és az internetkapcsolat képességeitől függően telefonról vagy számítógépről is ellenőrizhető a kamerakép.',
   },
   {
-    icon: ClipboardIcon,
-    title: 'Előre tudja, mire számíthat',
-    body: 'A helyszíni felmérés után pontos és átlátható árajánlatot adunk, rejtett költségek nélkül.',
+    title: 'Visszakereshető események',
+    text: 'A rögzített felvétel a megfelelő jogosultsággal és a rendszer beállításai szerint visszakereshető.',
   },
   {
-    icon: CheckIcon,
-    title: 'Hivatalos számlával & Garanciával',
-    body: 'Minden munkáról számlát állítunk ki, magánszemélyeknek és vállalkozásoknak egyaránt.',
+    title: 'Éjszakai megfigyelés',
+    text: 'A megfelelő kamerával és elhelyezéssel gyenge fényviszonyok között is használható képet lehet elérni.',
   },
   {
-    icon: MapPinIcon,
-    title: 'Helyi székesfehérvári csapat',
-    body: 'Székesfehérvárról indulunk, gyorsan kiérkezünk a helyszínre Fejér vármegye egész területén.',
+    title: 'Látható védelmi eszköz',
+    text: 'A kamera jelenléte visszatartó hatású lehet, de bűncselekmény megelőzésére vagy megakadályozására nem adható garancia.',
   },
 ];
 
-const whenToCallItems = [
-  'Nincs kamera az üzletben, irodában vagy a háznál, de kellene.',
-  'A meglévő kamerarendszer nem rögzít, sötét a kép vagy elromlott.',
-  'Bővíteni kéne újabb kamerákkal a jelenlegi rendszert.',
-  'A régi analóg kamerákat korszerűsítené nagy felbontású IP kamerákra.',
-  'Okostelefonról szeretné látni az élő képet és a visszajátszást távolról is.',
-  'Sajnálatos betörés vagy rongálás után szeretne azonnali védelmet.',
-  'Riasztóval és beléptetővel kombinált vagyonvédelmet keres.',
-  'Bizonytalan a kamerák számában és elhelyezésében, szakértő tanácsot kér.',
-];
-
-const serviceLandingCards = [
+const useCases = [
   {
-    title: 'Kamerarendszer Telepítés',
-    desc: 'Új IP és analóg kamerarendszerek szakszerű kiépítése Székesfehérváron és Fejér vármegyében.',
-    href: '/kamerarendszer-telepites-szekesfehervar',
-    badge: 'Legnépszerűbb',
+    title: 'Családi ház',
+    text: 'Bejárat, kapu, udvar vagy más indokolt terület megfigyelése a helyszín adottságai szerint.',
+    href: '/csaladi-haz-nyaralo',
   },
   {
-    title: 'Kamerarendszer Javítás',
-    desc: 'Gyors hibaelhárítás, rögzítő javítás, kábelcsere és tápegység pótlás meglévő rendszereknél.',
-    href: '/kamerarendszer-javitas-szekesfehervar',
-    badge: 'Gyorsszerviz',
+    title: 'Nyaraló',
+    text: 'Távol lévő ingatlan ellenőrzése, amennyiben a hálózati és rendszerfeltételek adottak.',
+    href: '/csaladi-haz-nyaralo',
   },
   {
-    title: 'IP Kamerarendszer',
-    desc: 'Ultra HD 4K felbontás, éjszakai színes látás, mobiltelefonos elérés és MI mozgásérzékelés.',
-    href: '/ip-kamerarendszer',
-    badge: 'Modern tech',
+    title: 'Üzlet',
+    text: 'Bejárat, vásárlótér vagy üzemi terület kamerás megfigyelése a jogszerű használat feltételeinek figyelembevételével.',
+    href: '/uzlet-telephely',
   },
   {
-    title: 'Üzleti Kamerarendszer',
-    desc: 'Ipari megfigyelés üzleteknek, raktáraknak, irodáknak és telephelyeknek Fejér vármegyében.',
-    href: '/uzleti-kamerarendszer',
-    badge: 'B2B megoldás',
-  },
-  {
-    title: 'Otthoni Kamerarendszer',
-    desc: 'Családi házak, kert, bejárat és garázs teljes körű védelme távoli eléréssel.',
-    href: '/otthoni-kamerarendszer',
-    badge: 'Családi ház',
-  },
-  {
-    title: 'Bővítés & Korszerűsítés',
-    desc: 'Meglévő rendszer kiegészítése extra kamerákkal vagy analóg hálózat felújítása.',
-    href: '/kamerarendszer-bovites',
-    badge: 'Rendszerfrissítés',
-  },
-  {
-    title: 'Riasztó & Beléptetés',
-    desc: 'Ajax és Paradox riasztók, beléptetők, kaputelefonok szakszerű telepítése kamerával.',
-    href: '/riaszto-es-beleptetes',
-    badge: 'Komplex védelem',
+    title: 'Telephely',
+    text: 'Kültéri és beltéri területek kamerás lefedése az adott helyszínhez igazítva.',
+    href: '/uzlet-telephely',
   },
 ];
 
-const packages = [
+const services = [
   {
-    name: 'Kicsi csomag',
-    range: '2–4 kamera',
-    goodFor: 'Egy bejárat, kisebb üzlethelyiség vagy családi ház kiemelt pontjai.',
+    title: 'Tervezés',
+    text: 'A kamerák helyét, látómezőjét, rögzítési igényét és a hálózati feltételeket a helyszín alapján tervezzük meg.',
+    href: '/kamerarendszer-tervezes',
   },
   {
-    name: 'Közepes csomag',
-    range: '4–8 kamera',
-    goodFor: 'Több bejárat, teljes ingatlan lefedése, nagyobb üzlet vagy telephely.',
+    title: 'Kivitelezés',
+    text: 'Kábelezés, kamera és rögzítő telepítése, hálózati beállítás, próba és átadás.',
+    href: '/kamerarendszer-telepites',
   },
   {
-    name: 'Nagy csomag',
-    range: '8+ kamera',
-    goodFor: 'Összetett telephelyek, több épület, riasztóval és beléptetővel kombinálva.',
-  },
-];
-
-const processSteps = [
-  {
-    title: '1. Kapcsolatfelvétel & Igényfelmérés',
-    body: 'Hívjon minket vagy töltse ki az űrlapot! Elmondja elképzeléseit, mi pedig átbeszéljük a lehetőségeket.',
+    title: 'Javítás',
+    text: 'Nincs kép, hibás kamera, rögzítési vagy elérési probléma esetén először azonosítjuk a rendszert és a hiba körét.',
+    href: '/kamerarendszer-javitas',
   },
   {
-    title: '2. Ingyenes Székesfehérvári Helyszíni Felmérés',
-    body: 'Személyesen felmérjük az ingatlan adottságait, a kábelezési útvonalat, majd pontos árajánlatot adunk.',
+    title: 'Bővítés',
+    text: 'Új kamera vagy rögzítési kapacitás hozzáadása előtt ellenőrizzük a meglévő rendszer kompatibilitását.',
+    href: '/kamerarendszer-javitas',
   },
   {
-    title: '3. Szakszerű Kivitelezés & Beállítás',
-    body: 'Felszereljük a kamerákat, beállítjuk a telefonos alkalmazást, betanítjuk a használatot és átadjuk a garanciális dokumentumokat.',
+    title: 'Karbantartás',
+    text: 'A rendszer állapotának, képének, rögzítésének és szükséges beállításainak egyeztetett ellenőrzése.',
+    href: '/kapcsolat?tipus=karbantartas',
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-paper flex flex-col font-body">
-      <Header />
-
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="bg-navy text-white relative overflow-hidden py-16 sm:py-24">
+    <SiteShell>
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-mist via-white to-mist">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(#0E2238 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        <div className="relative max-w-content mx-auto px-4 sm:px-6 py-16 sm:py-24 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+          <div className="animate-rise">
+            <p className="text-sm font-semibold text-accent mb-3 tracking-wide">Kamera Fehérvár</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-navy leading-tight mb-5">
+              Kamerarendszer Székesfehérváron – tervezés, telepítés és javítás.
+            </h1>
+            <p className="text-base sm:text-lg text-muted leading-relaxed mb-8 max-w-xl">
+              Családi házhoz, nyaralóhoz, üzlethez vagy telephelyhez. Új rendszert építünk, meglévőt bővítünk, és
+              hibával is kereshet.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <CtaLink
+                href="/kapcsolat?tipus=uj"
+                location="hero"
+                label="Ajánlatot kérek"
+                className="inline-flex justify-center items-center bg-accent hover:bg-accent-hover text-white px-6 py-3.5 rounded-lg font-semibold transition-colors"
+              >
+                Ajánlatot kérek
+              </CtaLink>
+              <CtaLink
+                href="/kapcsolat?tipus=javitas"
+                location="hero"
+                label="Kamerát javíttatnék"
+                className="inline-flex justify-center items-center border border-navy/20 text-navy hover:border-accent hover:text-accent px-6 py-3.5 rounded-lg font-semibold transition-colors bg-white"
+              >
+                Kamerát javíttatnék
+              </CtaLink>
+            </div>
+          </div>
           <div
-            className="absolute inset-0 opacity-[0.06] pointer-events-none"
-            style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, white 1px, transparent 1px)',
-              backgroundSize: '32px 32px',
-            }}
-          />
-          <div className="max-w-content mx-auto px-4 sm:px-6 relative z-10">
-            <Reveal>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-white/90 text-xs font-semibold uppercase tracking-wider mb-6">
-                <MapPinIcon className="w-4 h-4 text-accent" />
-                Székesfehérvár & Fejér vármegye
-              </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight max-w-3xl tracking-tight">
-                Biztonsági kamerát szereltetne, vagy javítana egy meglévőt?
-              </h1>
-            </Reveal>
+            className="relative aspect-[4/3] rounded-2xl border border-line overflow-hidden animate-rise bg-mist"
+            style={{ animationDelay: '0.12s' }}
+          >
+            <Image
+              src="/kep_kezdolapra.png"
+              alt="Kamerarendszer tervezés és telepítés – kamera, kábelezés és rögzítés"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 540px"
+              className="object-cover object-center"
+            />
+          </div>
+        </div>
+      </section>
 
-            <Reveal delay={100}>
-              <p className="mt-5 text-base sm:text-lg text-white/85 leading-relaxed max-w-2xl">
-                Kiépítünk új biztonsági kamerarendszert, javítjuk vagy bővítjük a meglévőt — Székesfehérváron és Fejér vármegyében, üzleteknek, telephelyeknek, irodáknak és családi házaknak.
+      {/* Intent split */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-10">
+            Új rendszer vagy meglévővel van probléma?
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="p-8 bg-mist rounded-2xl border border-line">
+              <h3 className="text-xl font-bold text-navy mb-3">Új kamerarendszer</h3>
+              <p className="text-muted leading-relaxed mb-6">
+                Tervezés, eszközválasztás, kábelezés, telepítés, rögzítés és átadás.
               </p>
-            </Reveal>
-
-            <Reveal delay={200}>
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={PHONE_HREF}
-                  className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3.5 rounded-lg font-display font-bold text-base transition-colors shadow-md"
-                >
-                  <PhoneIcon className="w-5 h-5" />
-                  Hívás: {PHONE}
-                </a>
-                <a
-                  href="#kapcsolat"
-                  className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-3.5 rounded-lg font-display font-bold text-base transition-colors"
-                >
-                  Kérek visszahívást
-                  <ArrowRightIcon className="w-4 h-4" />
-                </a>
-              </div>
-            </Reveal>
-
-            <Reveal delay={300}>
-              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-xs sm:text-sm text-white/75">
-                <span className="flex items-center gap-1.5">
-                  <CheckIcon className="w-4 h-4 text-accent" /> Székesfehérvár & Fejér vármegye
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckIcon className="w-4 h-4 text-accent" /> IP és Analóg kamerarendszerek
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckIcon className="w-4 h-4 text-accent" /> Ingyenes helyszíni felmérés
-                </span>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* SEO Landing Pages Internal Linking Hub */}
-        <section className="py-16 sm:py-20 bg-paper border-b border-line">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <Reveal>
-              <div className="text-center max-w-2xl mx-auto mb-12">
-                <span className="text-xs font-bold font-display uppercase tracking-wider text-accent mb-2 block">
-                  Szakterületeink
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-navy">
-                  Biztonságtechnikai szolgáltatásaink Székesfehérváron
-                </h2>
-                <p className="font-body text-sm sm:text-base text-ink/70 mt-3">
-                  Válassza ki az Ön számára releváns területet a részletes tájékoztatóért:
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {serviceLandingCards.map((card, i) => (
-                <Reveal key={card.href} delay={i * 60}>
-                  <Link
-                    href={card.href}
-                    className="group bg-white rounded-xl p-6 border border-line shadow-sm hover:shadow-md hover:border-accent/40 transition-all flex flex-col justify-between h-full"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="inline-block px-2.5 py-0.5 rounded-full bg-mist text-navy font-display font-semibold text-xs">
-                          {card.badge}
-                        </span>
-                        <ArrowRightIcon className="w-4 h-4 text-accent group-hover:translate-x-1 transition-transform" />
-                      </div>
-                      <h3 className="font-display font-bold text-lg text-navy group-hover:text-accent transition-colors mb-2">
-                        {card.title}
-                      </h3>
-                      <p className="font-body text-sm text-ink/70 leading-relaxed">
-                        {card.desc}
-                      </p>
-                    </div>
-                    <div className="mt-4 pt-3 border-t border-line/50 text-xs font-semibold text-accent flex items-center gap-1">
-                      Tovább a részletekre &rarr;
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
+              <CtaLink
+                href="/kapcsolat?tipus=uj"
+                location="intent_split"
+                label="Új rendszert szeretnék"
+                className="inline-flex text-accent hover:text-accent-hover font-semibold"
+              >
+                Új rendszert szeretnék →
+              </CtaLink>
             </div>
-          </div>
-        </section>
-
-        {/* Trust Strip */}
-        <section className="bg-mist py-12 sm:py-16">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {trustItems.map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <Reveal key={item.title} delay={i * 100}>
-                    <div className="bg-white rounded-xl p-6 h-full border border-line/60 shadow-sm">
-                      <div className="w-11 h-11 rounded-lg bg-navy/10 text-navy flex items-center justify-center mb-4">
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <h3 className="font-display font-bold text-base text-ink mb-2">{item.title}</h3>
-                      <p className="font-body text-sm text-ink/70 leading-relaxed">{item.body}</p>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* When to Call */}
-        <section className="py-16 sm:py-24">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <Reveal>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-navy text-center mb-12">
-                Ilyen feladatokkal szoktak hívni minket Székesfehérváron
-              </h2>
-            </Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-3xl mx-auto">
-              {whenToCallItems.map((item, i) => (
-                <Reveal key={item} delay={(i % 2) * 80} as="div">
-                  <div className="flex items-start gap-3 bg-mist/60 rounded-lg p-4 border border-line/50">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/15 text-accent flex items-center justify-center mt-0.5">
-                      <CheckIcon className="w-3.5 h-3.5" />
-                    </span>
-                    <span className="font-body text-sm sm:text-base text-ink">{item}</span>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-            <Reveal delay={200}>
-              <p className="text-center mt-8 font-body text-ink/70 text-base">
-                Ha az Ön feladata nem szerepel a listán, lépjen kapcsolatba velünk, és megoldjuk!
+            <div className="p-8 bg-mist rounded-2xl border border-line">
+              <h3 className="text-xl font-bold text-navy mb-3">Meglévő kamerarendszer</h3>
+              <p className="text-muted leading-relaxed mb-6">
+                Nincs kép, hibás egy kamera, nem működik a rögzítés, távoli elérés vagy bővíteni szeretné a rendszert.
               </p>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Cross Sell Section */}
-        <section className="py-8">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <CrossSellSection />
-          </div>
-        </section>
-
-        {/* Packages */}
-        <section className="py-16 sm:py-24 bg-mist">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <Reveal>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-navy text-center mb-4">
-                Kamerarendszer kiépítési csomagok
-              </h2>
-            </Reveal>
-            <Reveal delay={100}>
-              <p className="text-center font-body text-ink/70 text-base max-w-2xl mx-auto mb-10">
-                A kiépítés nagyságrendje az eszközök számától függ — a pontos elrendezést mindig a helyszíni felmérés során határozzuk meg.
-              </p>
-            </Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
-              {packages.map((pkg, i) => (
-                <Reveal key={pkg.name} delay={i * 100}>
-                  <div className="bg-white rounded-xl p-6 border border-line/60 shadow-sm h-full flex flex-col">
-                    <div className="flex items-center gap-2.5 mb-4">
-                      <CameraIcon className="w-5 h-5 text-accent" />
-                      <h3 className="font-display font-bold text-lg text-navy">{pkg.name}</h3>
-                    </div>
-                    <div className="inline-block self-start bg-navy/8 text-navy px-3 py-1 rounded-full text-sm font-medium font-body mb-4">
-                      {pkg.range}
-                    </div>
-                    <p className="font-body text-sm text-ink/70 leading-relaxed flex-grow">{pkg.goodFor}</p>
-                  </div>
-                </Reveal>
-              ))}
+              <CtaLink
+                href="/kapcsolat?tipus=javitas"
+                location="intent_split"
+                label="Javítást / bővítést kérek"
+                className="inline-flex text-accent hover:text-accent-hover font-semibold"
+              >
+                Javítást / bővítést kérek →
+              </CtaLink>
             </div>
-            <Reveal delay={300}>
-              <div className="text-center mt-10">
-                <p className="font-body text-sm text-ink/60 max-w-2xl mx-auto mb-6 leading-relaxed">
-                  Rejtett költségeket nem alkalmazunk. Az ingatlan adottságai (kábelezés hossza, faláttörések, kamerák típusa) egyediek, ezért a székesfehérvári felmérés ingyenes, utána adjuk meg a végleges fix ajánlatot.
-                </p>
-                <a
-                  href="#kapcsolat"
-                  className="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3.5 rounded-lg font-display font-bold text-base transition-colors"
-                >
-                  Kérek ingyenes helyszíni felmérést
-                </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits */}
+      <section className="py-16 sm:py-20 bg-mist">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-10 max-w-2xl mx-auto">
+            Mire használható egy jól megtervezett kamerarendszer?
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {benefits.map((item) => (
+              <div key={item.title} className="bg-white p-6 rounded-xl border border-line">
+                <h3 className="font-bold text-navy mb-2">{item.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{item.text}</p>
               </div>
-            </Reveal>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Process */}
-        <section className="py-16 sm:py-24">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <Reveal>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-navy text-center mb-12">
-                Hogyan zajlik a közös munka?
-              </h2>
-            </Reveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {processSteps.map((step, i) => (
-                <Reveal key={step.title} delay={i * 100}>
-                  <div className="relative bg-mist/40 p-6 rounded-xl border border-line/50 h-full">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="flex-shrink-0 w-10 h-10 rounded-full bg-navy text-white font-display font-extrabold text-base flex items-center justify-center">
-                        {i + 1}
-                      </span>
-                    </div>
-                    <h3 className="font-display font-bold text-base text-ink mb-2">{step.title}</h3>
-                    <p className="font-body text-sm text-ink/70 leading-relaxed">{step.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+      {/* Use cases */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-10">Hova kerülhet?</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {useCases.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="block p-5 border border-line rounded-xl hover:border-accent/40 transition-colors"
+              >
+                <h3 className="font-bold text-navy mb-2">{item.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{item.text}</p>
+              </Link>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Contact Form Section */}
-        <section id="kapcsolat" className="bg-mist py-16 sm:py-24 scroll-mt-20">
-          <div className="max-w-content mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
-              <Reveal>
-                <div>
-                  <span className="text-xs font-bold font-display uppercase tracking-wider text-accent mb-2 block">
-                    Kapcsolatfelvétel
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-navy mb-4">
-                    Hívjon minket, vagy kérjen visszahívást
-                  </h2>
-                  <p className="font-body text-base text-ink/70 leading-relaxed mb-8">
-                    Töltse ki az alábbi űrlapot az ingyenes helyszíni felméréshez vagy ajánlatkéréshez. Egy órán belül visszahívjuk!
-                  </p>
-                  <div className="space-y-4">
-                    <a href={PHONE_HREF} className="flex items-center gap-3 group">
-                      <span className="w-10 h-10 rounded-lg bg-navy text-white flex items-center justify-center">
-                        <PhoneIcon className="w-5 h-5 text-accent" />
-                      </span>
-                      <span className="font-display font-bold text-lg text-navy group-hover:text-accent transition-colors">
-                        {PHONE}
-                      </span>
-                    </a>
-                    <a href="mailto:szia@kamerafehervar.hu" className="flex items-center gap-3 group">
-                      <span className="w-10 h-10 rounded-lg bg-navy text-white flex items-center justify-center">
-                        <MailIcon className="w-5 h-5 text-accent" />
-                      </span>
-                      <span className="font-display font-bold text-lg text-navy group-hover:text-accent transition-colors">
-                        szia@kamerafehervar.hu
-                      </span>
-                    </a>
-                  </div>
-                  <div className="mt-8 flex items-start gap-3 p-4 bg-white rounded-lg border border-line/60 shadow-sm">
-                    <MapPinIcon className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <p className="font-body text-sm text-ink/80">
-                      <strong>Szolgáltatási terület:</strong> Székesfehérvár, Agárd, Gárdony, Velence, Mór, Polgárdi, Bicske, Sárbogárd és Fejér vármegye egész területe.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-              <Reveal delay={100}>
-                <ContactForm />
-              </Reveal>
-            </div>
+      {/* Services */}
+      <section className="py-16 sm:py-20 bg-mist">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-10">
+            A teljes kamerás feladattal kereshet.
+          </h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {services.map((item) => (
+              <Link
+                key={item.title}
+                href={item.href}
+                className="block bg-white p-6 rounded-xl border border-line hover:border-accent/40 transition-colors"
+              >
+                <h3 className="font-bold text-navy mb-2">{item.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{item.text}</p>
+              </Link>
+            ))}
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <Footer />
-      <MobileCallBar />
-    </div>
+      {/* Pricing */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6 text-center">
+          <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-5">
+            Ésszerűen méretezett rendszer, felesleges eszközök nélkül.
+          </h2>
+          <p className="text-muted leading-relaxed mb-4">
+            Nem előre csomagolt kameradarabszámból indulunk ki. Az ajánlat alapja a megfigyelni kívánt terület, a
+            képigény, a rögzítés, a kábelezés és a helyszín.
+          </p>
+          <p className="text-sm text-muted leading-relaxed">
+            Az ajánlatban az eszközök és a kivitelezés legyen egyértelműen követhető.
+          </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Brands */}
+      <section className="py-14 bg-navy text-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Márkák, amelyekkel dolgozunk.</h2>
+          <p className="text-white/80 leading-relaxed max-w-2xl mx-auto">
+            Hikvision · Dahua · VideoSec. Meglévő rendszer javításánál először azonosítjuk a pontos típust és a
+            kompatibilitást.
+          </p>
+        </div>
+      </section>
+
+      {/* Diagram */}
+      <section className="py-16 sm:py-20 bg-mist">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy text-center mb-10">
+            Egy tipikus kamerarendszer felépítése.
+          </h2>
+          <div className="bg-white rounded-2xl border border-line p-6 sm:p-10">
+            <SystemDiagram />
+          </div>
+        </div>
+      </section>
+
+      {/* Privacy */}
+      <section className="py-16 sm:py-20 bg-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6">
+          <div className="max-w-3xl">
+          <h2 className="text-2xl sm:text-3xl font-bold text-navy mb-5">
+            A kamera használatának jogszerűsége is számít.
+          </h2>
+          <p className="text-muted leading-relaxed">
+            A megfigyelt terület, a tájékoztatás, a felvételek kezelése és a hozzáférés adatvédelmi kérdés lehet. A
+            rendszer telepítése önmagában nem jelent jogi megfelelőségi garanciát; összetett esetben adatvédelmi vagy
+            jogi szakértő bevonása indokolt.
+          </p>
+          </div>
+        </div>
+      </section>
+
+      {/* SIROTECH badge */}
+      <section className="py-8 bg-mist border-y border-line">
+        <div className="max-w-content mx-auto px-4 sm:px-6 text-center">
+          <p className="text-xs text-muted">
+            A Kamera Fehérvár szolgáltatást a <span className="font-semibold text-navy">SIROTECH Kft.</span> nyújtja.
+          </p>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 sm:py-20 bg-navy text-white">
+        <div className="max-w-content mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Új kamerarendszer vagy javítás?</h2>
+          <p className="text-white/75 mb-8 max-w-xl mx-auto">
+            Adja meg a helyszínt, az ingatlan típusát és röviden, mire van szüksége.
+          </p>
+          <CtaLink
+            href="/kapcsolat"
+            location="final_cta"
+            label="Ajánlatkérés"
+            className="inline-flex bg-accent hover:bg-accent-hover text-white px-8 py-3.5 rounded-lg font-semibold transition-colors"
+          >
+            Ajánlatkérés
+          </CtaLink>
+        </div>
+      </section>
+    </SiteShell>
   );
 }

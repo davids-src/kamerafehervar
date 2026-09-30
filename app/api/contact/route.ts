@@ -1,33 +1,42 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+const TASKS = [
+  'Új kamerarendszer',
+  'Meglévő rendszer bővítése',
+  'Kamerarendszer javítása',
+  'Karbantartás',
+];
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const {
       name,
       phone,
-      company,
       email,
       message,
-      customer_type = 'Magánszemély',
-      request_type = 'Új kamerarendszer',
-      location = 'Székesfehérvár',
+      task = 'Új kamerarendszer',
+      property = '',
+      location = '',
+      brand,
+      camera_count,
       consent,
     } = body;
 
-    if (!name || !phone) {
+    if (!name || !phone || !message || !location || !property) {
       return NextResponse.json(
-        { error: 'Név és telefonszám megadása kötelező.' },
+        { error: 'A kötelező mezők kitöltése szükséges (név, telefon, település, ingatlan, leírás).' },
         { status: 400 }
       );
     }
 
     if (!consent) {
-      return NextResponse.json(
-        { error: 'Az adatkezelési hozzájárulás szükséges.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Az adatkezelési hozzájárulás szükséges.' }, { status: 400 });
+    }
+
+    if (!TASKS.includes(task)) {
+      return NextResponse.json({ error: 'Érvénytelen feladat típus.' }, { status: 400 });
     }
 
     const adminEmail = process.env.SIROTECH_ADMIN_EMAIL;
@@ -36,14 +45,14 @@ export async function POST(req: NextRequest) {
     const smtpPass = process.env.SMTP_PASS;
 
     if (!adminEmail || !smtpHost || !smtpUser || !smtpPass) {
-      // Return success in dev/demo environment if SMTP isn't configured, or log fallback
       console.log('Contact form payload received:', {
         name,
         phone,
-        customer_type,
-        request_type,
+        task,
+        property,
         location,
-        company,
+        brand,
+        camera_count,
         email,
         message,
       });
@@ -57,29 +66,42 @@ export async function POST(req: NextRequest) {
       host: smtpHost,
       port: smtpPort,
       secure: smtpSecure,
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
+      auth: { user: smtpUser, pass: smtpPass },
     });
 
-    const subject = `[KAMERA FEHÉRVÁR] ${request_type} | ${customer_type} | ${location}`;
+    const subject = `Kamera Fehérvár – ${task} – ${location} – ${name}`;
+
+    const brandRow =
+      brand != null && brand !== ''
+        ? `<tr><td style="padding:8px 12px 8px 0;font-weight:600;width:180px;color:#647383;">Gyártó:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(String(brand))}</td></tr>`
+        : '';
+    const countRow =
+      camera_count != null && camera_count !== ''
+        ? `<tr><td style="padding:8px 12px 8px 0;font-weight:600;width:180px;color:#647383;">Kamerák száma:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(String(camera_count))}</td></tr>`
+        : '';
 
     const adminHtml = `
-      <h2>Új ajánlatkérés / megkeresés — Kamera Fehérvár</h2>
-      <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px;width:100%;max-width:600px;">
-        <tr><td style="padding:6px 12px 6px 0;font-weight:bold;width:160px;">Feladat jellege:</td><td>${escapeHtml(request_type)}</td></tr>
-        <tr><td style="padding:6px 12px 6px 0;font-weight:bold;">Ügyfél típusa:</td><td>${escapeHtml(customer_type)}</td></tr>
-        <tr><td style="padding:6px 12px 6px 0;font-weight:bold;">Település:</td><td>${escapeHtml(location)}</td></tr>
-        <tr><td style="padding:6px 12px 6px 0;font-weight:bold;">Név:</td><td>${escapeHtml(name)}</td></tr>
-        <tr><td style="padding:6px 12px 6px 0;font-weight:bold;">Telefonszám:</td><td>${escapeHtml(phone)}</td></tr>
-        ${company ? `<tr><td style="padding:6px 12px 6px 0;font-weight:bold;">Cég:</td><td>${escapeHtml(company)}</td></tr>` : ''}
-        ${email ? `<tr><td style="padding:6px 12px 6px 0;font-weight:bold;">E-mail:</td><td>${escapeHtml(email)}</td></tr>` : ''}
-        ${message ? `<tr><td style="padding:6px 12px 6px 0;font-weight:bold;vertical-align:top;">Üzenet:</td><td>${escapeHtml(message)}</td></tr>` : ''}
-      </table>
+      <div style="font-family:'Source Sans 3',Arial,sans-serif;max-width:600px;margin:0 auto;">
+        <div style="background:#0E2238;padding:20px 24px;">
+          <h1 style="margin:0;color:#FFFFFF;font-size:18px;font-weight:700;">Kamera Fehérvár – megkeresés</h1>
+        </div>
+        <div style="border-top:3px solid #0068F0;padding:24px;background:#F5F8FB;">
+          <table style="border-collapse:collapse;font-size:14px;width:100%;">
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;width:180px;color:#647383;">Feladat:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(task)}</td></tr>
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;color:#647383;">Ingatlan:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(property)}</td></tr>
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;color:#647383;">Település:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(location)}</td></tr>
+            ${brandRow}
+            ${countRow}
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;color:#647383;">Név:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(name)}</td></tr>
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;color:#647383;">Telefonszám:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(phone)}</td></tr>
+            ${email ? `<tr><td style="padding:8px 12px 8px 0;font-weight:600;color:#647383;">E-mail:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(email)}</td></tr>` : ''}
+            <tr><td style="padding:8px 12px 8px 0;font-weight:600;vertical-align:top;color:#647383;">Leírás:</td><td style="padding:8px 0;color:#17202A;">${escapeHtml(message)}</td></tr>
+          </table>
+        </div>
+      </div>
     `;
 
-    const adminText = `Új megkeresés — Kamera Fehérvár\n\nFeladat: ${request_type}\nÜgyfél: ${customer_type}\nTelepülés: ${location}\nNév: ${name}\nTelefonszám: ${phone}\n${company ? `Cég: ${company}\n` : ''}${email ? `E-mail: ${email}\n` : ''}${message ? `Üzenet: ${message}\n` : ''}`;
+    const adminText = `Kamera Fehérvár – megkeresés\n\nFeladat: ${task}\nIngatlan: ${property}\nTelepülés: ${location}\n${brand ? `Gyártó: ${brand}\n` : ''}${camera_count ? `Kamerák: ${camera_count}\n` : ''}Név: ${name}\nTelefon: ${phone}\n${email ? `E-mail: ${email}\n` : ''}Leírás: ${message}\n`;
 
     await transporter.sendMail({
       from: `"Kamera Fehérvár" <${smtpUser}>`,
@@ -90,21 +112,26 @@ export async function POST(req: NextRequest) {
     });
 
     if (email) {
+      const confirmBody =
+        'Köszönjük, hogy írt a Kamera Fehérvár oldalán. Az elküldött adatokat megkaptuk. A feladat részleteinek egyeztetéséhez a megadott elérhetőségen jelentkezünk. Sürgős esetben hívjon minket: +36 70 273 5532.';
+
       const clientHtml = `
-        <div style="font-family:sans-serif;font-size:14px;color:#16223B;max-width:560px;">
-          <h2 style="color:#1C3461;font-family:'Archivo',sans-serif;">Köszönjük megkeresését!</h2>
-          <p>Megkaptuk az ajánlatkérését (<strong>${escapeHtml(request_type)}</strong> — ${escapeHtml(location)}). Munkatársunk hamarosan felveszi Önnel a kapcsolatot a megadott telefonszámon.</p>
-          <hr style="border:none;border-top:1px solid #E5E7EB;margin:20px 0;"/>
-          <p style="color:#6B7280;font-size:13px;">Kamera Fehérvár — SIROTECH Kft.<br/>+36 70 273 5532<br/>szia@kamerafehervar.hu</p>
+        <div style="font-family:'Source Sans 3',Arial,sans-serif;font-size:14px;color:#17202A;max-width:560px;">
+          <div style="background:#0E2238;padding:16px 20px;margin-bottom:0;">
+            <strong style="color:#FFFFFF;">Kamera Fehérvár</strong>
+          </div>
+          <div style="border-top:3px solid #0068F0;padding:20px;background:#FFFFFF;">
+            <p style="margin:0 0 12px;line-height:1.55;">${confirmBody}</p>
+            <p style="margin:20px 0 0;color:#647383;font-size:13px;">SIROTECH Kft.<br/>+36 70 273 5532<br/>szia@kamerafehervar.hu</p>
+          </div>
         </div>
       `;
-      const clientText = `Köszönjük megkeresését!\n\nMegkaptuk az ajánlatkérését (${request_type} — ${location}). Munkatársunk hamarosan felveszi Önnel a kapcsolatot a megadott telefonszámon.\n\nKamera Fehérvár — SIROTECH Kft.\n+36 70 273 5532\nszia@kamerafehervar.hu`;
 
       await transporter.sendMail({
         from: `"Kamera Fehérvár" <${smtpUser}>`,
         to: email,
-        subject: 'Megkaptuk ajánlatkérését — Kamera Fehérvár',
-        text: clientText,
+        subject: 'Megkaptuk a megkeresését – Kamera Fehérvár',
+        text: confirmBody,
         html: clientHtml,
       });
     }

@@ -3,100 +3,81 @@
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { trackPhoneClick } from '@/lib/gtag';
-
-const PHONE = '+36 70 273 5532';
-const PHONE_HREF = 'tel:+36702735532';
-
-const footerServices = [
-  { name: 'Kamerarendszer telepítés', href: '/kamerarendszer-telepites-szekesfehervar' },
-  { name: 'Kamerarendszer javítás', href: '/kamerarendszer-javitas-szekesfehervar' },
-  { name: 'IP kamerarendszerek', href: '/ip-kamerarendszer' },
-  { name: 'Üzleti kamerarendszerek', href: '/uzleti-kamerarendszer' },
-  { name: 'Otthoni kamerarendszerek', href: '/otthoni-kamerarendszer' },
-  { name: 'Bővítés & Korszerűsítés', href: '/kamerarendszer-bovites' },
-  { name: 'Riasztó & Beléptető rendszerek', href: '/riaszto-es-beleptetes' },
-];
+import { navItems, PHONE_DISPLAY, PHONE_HREF, EMAIL } from '@/lib/routes';
 
 export function Footer() {
   return (
-    <footer className="bg-navy-deep text-white py-12 pb-24 md:pb-12 border-t border-white/10">
+    <footer className="bg-navy text-white py-12 pb-24 md:pb-12">
       <div className="max-w-content mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
-          {/* Col 1: Brand */}
-          <div className="md:col-span-1 space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          <div className="space-y-4">
             <Logo variant="light" />
-            <p className="font-body text-xs text-white/70 leading-relaxed">
-              Biztonsági kamerarendszerek és biztonságtechnika telepítése, javítása, karbantartása Székesfehérváron és Fejér vármegyében.
+            <p className="text-xs text-white/70 leading-relaxed">
+              Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron és Fejér vármegyében.
             </p>
-            <div className="space-y-1 font-body text-sm text-white/80">
+            <div className="space-y-1 text-sm text-white/80">
               <p>
                 <a
                   href={PHONE_HREF}
                   onClick={() => trackPhoneClick('footer')}
-                  className="hover:text-accent font-bold transition-colors"
+                  className="hover:text-white font-semibold transition-colors"
                 >
-                  {PHONE}
+                  {PHONE_DISPLAY}
                 </a>
               </p>
               <p>
-                <a href="mailto:szia@kamerafehervar.hu" className="hover:text-accent transition-colors">
-                  szia@kamerafehervar.hu
+                <a href={`mailto:${EMAIL}`} className="hover:text-white transition-colors">
+                  {EMAIL}
                 </a>
               </p>
-              <p className="text-xs text-white/60">Székesfehérvár és Fejér vármegye</p>
             </div>
           </div>
 
-          {/* Col 2 & 3: Services (Internal Links) */}
-          <div className="md:col-span-2 space-y-3">
-            <h3 className="font-display font-bold text-sm text-white uppercase tracking-wider">
-              Szolgáltatásaink Székesfehérváron
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-body text-xs text-white/75">
-              {footerServices.map((service) => (
-                <Link
-                  key={service.href}
-                  href={service.href}
-                  className="hover:text-accent transition-colors py-1 flex items-center gap-1.5"
-                >
-                  <span className="text-accent">&bull;</span>
-                  {service.name}
-                </Link>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-sm text-white uppercase tracking-wider">Szolgáltatások</h3>
+            <ul className="space-y-2 text-sm text-white/75">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="hover:text-white transition-colors">
+                    {item.name}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
 
-          {/* Col 4: Legal & Info */}
-          <div className="space-y-3 font-body text-xs text-white/70">
-            <h3 className="font-display font-bold text-sm text-white uppercase tracking-wider">
-              Információk
-            </h3>
+          <div className="space-y-3 text-sm text-white/70">
+            <h3 className="font-semibold text-sm text-white uppercase tracking-wider">Információk</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/aszf" className="hover:text-accent transition-colors">
-                  Általános Szerződési Feltételek (ÁSZF)
+                <Link href="/aszf" className="hover:text-white transition-colors">
+                  Általános Szerződési Feltételek
                 </Link>
               </li>
               <li>
-                <Link href="/adatkezeles" className="hover:text-accent transition-colors">
-                  Adatkezelési Tájékoztató
+                <Link href="/adatvedelem" className="hover:text-white transition-colors">
+                  Adatvédelmi tájékoztató
                 </Link>
               </li>
               <li>
-                <a href="#kapcsolat" className="hover:text-accent transition-colors">
-                  Ingyenes helyszíni felmérés
-                </a>
+                <Link href="/kapcsolat" className="hover:text-white transition-colors">
+                  Kapcsolat
+                </Link>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Legal provider statement */}
-        <div className="pt-6 border-t border-white/10 text-center md:text-left">
-          <p className="font-body text-xs text-white/50 leading-relaxed">
-            A Kamera Fehérvár szolgáltatást a <strong>SIROTECH Informatikai és Biztonságtechnikai Kft.</strong> üzemelteti.
+        <div className="pt-6 border-t border-white/10">
+          <p className="text-xs text-white/50 leading-relaxed">
+            A Kamera Fehérvár szolgáltatást a <strong className="text-white/70">SIROTECH Kft.</strong> nyújtja.
             <br className="hidden sm:inline" />
-            Székhely: 8000 Székesfehérvár, Lövölde utca 24. 4/15. | Adószám: 33056151-2-07 | Cégjegyzékszám: Cg. 07-09-037603
+            Székhely: 8000 Székesfehérvár, Lövölde utca 24. 4/15. | Adószám: 33056151-2-07 | Cégjegyzékszám: Cg.
+            07-09-037603
+          </p>
+          <p className="mt-3 text-[11px] text-white/40 max-w-2xl">
+            A kivitelező nem adhat automatikus adatvédelmi megfelelőségi garanciát. A kamera jelenléte visszatartó
+            hatású lehet, de bűncselekmény megelőzésére nem adható garancia.
           </p>
         </div>
       </div>

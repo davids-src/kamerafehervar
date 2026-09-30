@@ -12,7 +12,7 @@ export function CookieBanner() {
     } else if (consent === 'granted' && typeof window !== 'undefined' && window.gtag) {
       window.gtag('consent', 'update', {
         analytics_storage: 'granted',
-        ad_storage: 'granted',
+        ad_storage: 'denied',
       });
     }
   }, []);
@@ -23,7 +23,7 @@ export function CookieBanner() {
     if (typeof window !== 'undefined' && window.gtag) {
       window.gtag('consent', 'update', {
         analytics_storage: 'granted',
-        ad_storage: 'granted',
+        ad_storage: 'denied',
       });
     }
   };
@@ -42,24 +42,25 @@ export function CookieBanner() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-50 p-4 sm:p-6 bg-navy text-white border-t border-line/20 shadow-2xl transition-all animate-fade-in">
+    <div className="fixed bottom-0 inset-x-0 z-50 p-4 sm:p-6 bg-navy text-white border-t border-white/10 shadow-2xl animate-fade-in">
       <div className="max-w-content mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-3xl">
-          <strong className="text-white font-display">Sütiket (cookie-kat) használunk</strong> weboldalunk teljesítményének mérési és látogatottsági elemzése céljából (Google Analytics). Személyes adatot (név, telefon, e-mail) a mérőkódok nem továbbítanak.{' '}
-          <a href="/adatkezeles" className="text-accent hover:underline">
-            Adatkezelési tájékoztató
+          <strong className="text-white">Sütiket használunk</strong> a látogatottság mérésére (Google Analytics), csak
+          az Ön hozzájárulása után. Személyes adatot (név, telefon, e-mail) a mérőkódok nem továbbítanak.{' '}
+          <a href="/adatvedelem" className="text-white underline underline-offset-2 hover:no-underline">
+            Adatvédelmi tájékoztató
           </a>
         </div>
         <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
           <button
             onClick={handleDecline}
-            className="w-1/2 sm:w-auto px-4 py-2 text-xs font-medium font-body bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-center"
+            className="w-1/2 sm:w-auto px-4 py-2 text-xs font-medium bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors text-center"
           >
             Elutasítom
           </button>
           <button
             onClick={handleAccept}
-            className="w-1/2 sm:w-auto px-5 py-2 text-xs font-bold font-display bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors text-center"
+            className="w-1/2 sm:w-auto px-5 py-2 text-xs font-semibold bg-accent hover:bg-accent-hover text-white rounded-lg transition-colors text-center"
           >
             Elfogadom
           </button>

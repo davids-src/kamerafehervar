@@ -10,44 +10,40 @@ const config: Config = {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#1C3461',
-          deep: '#14264B',
+          DEFAULT: '#0E2238',
+          secondary: '#153451',
         },
         accent: {
-          DEFAULT: '#D9482B',
-          hover: '#BF3D24',
+          DEFAULT: '#0068F0',
+          hover: '#005ACF',
         },
-        mist: '#EEF2F8',
         paper: '#FFFFFF',
-        ink: '#16223B',
-        line: '#D3DDEC',
+        mist: '#F5F8FB',
+        ink: '#17202A',
+        muted: '#647383',
+        line: '#D8E0EA',
       },
       fontFamily: {
-        display: ['Archivo', 'system-ui', 'sans-serif'],
-        body: ['IBM Plex Sans', 'system-ui', 'sans-serif'],
+        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        display: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+        body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
         content: '1080px',
       },
       keyframes: {
-        'reveal': {
-          from: {
-            opacity: '0',
-            transform: 'translateY(24px)',
-          },
-          to: {
-            opacity: '1',
-            transform: 'translateY(0)',
-          },
-        },
         'fade-in': {
           from: { opacity: '0' },
           to: { opacity: '1' },
         },
+        'rise': {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
-        'reveal': 'reveal 0.6s ease-out forwards',
         'fade-in': 'fade-in 0.4s ease-out forwards',
+        rise: 'rise 0.55s ease-out forwards',
       },
     },
   },

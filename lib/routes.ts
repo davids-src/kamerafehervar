@@ -2,137 +2,113 @@ export interface RouteConfig {
   path: string;
   title: string;
   description: string;
-  contentUpdatedAt: string; // Explicit ISO Date string YYYY-MM-DD
-  priority: number;
-  changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-  serviceName?: string;
+  /** Explicit content modification date (YYYY-MM-DD). Never use build time. */
+  contentUpdatedAt: string;
   keywords?: string[];
 }
 
 export const SITE_URL = 'https://kamerafehervar.hu';
+export const PHONE_DISPLAY = '+36 70 273 5532';
+export const PHONE_HREF = 'tel:+36702735532';
+export const EMAIL = 'szia@kamerafehervar.hu';
 
+/** Canonical routes only — sitemap and navigation derive from this list. */
 export const routeConfigs: RouteConfig[] = [
   {
     path: '/',
-    title: 'Kamerarendszer telepítés és javítás Székesfehérváron | Kamera Fehérvár',
+    title: 'Kamerarendszer Székesfehérváron | Kamera Fehérvár',
     description:
-      'Kamerarendszer telepítés, javítás, bővítés és korszerűsítés Székesfehérváron és Fejér vármegyében. Cégeknek és otthonra, IP és analóg rendszerekhez.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 1.0,
-    changeFrequency: 'monthly',
+      'Kamerarendszer tervezés, telepítés, bővítés és javítás Székesfehérváron. Családi ház, nyaraló, üzlet és telephely.',
+    contentUpdatedAt: '2026-09-30',
     keywords: [
       'kamerarendszer Székesfehérvár',
       'kamera telepítés Székesfehérvár',
+      'kamerarendszer telepítés Székesfehérvár',
       'kamerarendszer javítás Székesfehérvár',
-      'IP kamera Székesfehérvár',
-      'biztonsági kamera Fejér megye',
-      'kamerarendszer bővítés',
+      'kamera javítás Székesfehérvár',
+      'kamera családi ház Székesfehérvár',
     ],
   },
   {
-    path: '/kamerarendszer-telepites-szekesfehervar',
-    title: 'Kamerarendszer Telepítés Székesfehérváron | Ingyenes Felmérés | Kamera Fehérvár',
+    path: '/kamerarendszer-telepites',
+    title: 'Kamerarendszer telepítés Székesfehérváron | Kamera Fehérvár',
     description:
-      'Profi biztonsági kamerarendszer telepítés Székesfehérváron és Fejér vármegyében. Új IP és analóg rendszerek tervezése, kiépítése garanciával, cégeknek és magánszemélyeknek.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.9,
-    changeFrequency: 'monthly',
-    serviceName: 'Kamerarendszer telepítés',
-    keywords: [
-      'kamera telepítés Székesfehérvár',
-      'biztonsági kamera kiépítés',
-      'kamerarendszer szerelés Fejér vármegye',
-    ],
+      'Kamerarendszer kivitelezés: kábelezés, kamera és rögzítő telepítése, hálózati beállítás, próba és átadás Székesfehérváron.',
+    contentUpdatedAt: '2026-09-30',
+    keywords: ['kamerarendszer telepítés Székesfehérvár', 'kamera telepítés Székesfehérvár'],
   },
   {
-    path: '/kamerarendszer-javitas-szekesfehervar',
-    title: 'Kamerarendszer Javítás Székesfehérváron | Hibaelhárítás | Kamera Fehérvár',
+    path: '/kamerarendszer-javitas',
+    title: 'Kamerarendszer javítás Székesfehérváron | Kamera Fehérvár',
     description:
-      'Elromlott, nem rögzít vagy nem elérhető a kamerarendszere? Gyors hibaelhárítás és javítás Székesfehérváron és Fejér vármegyében, analóg és IP rendszerekhez egyaránt.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.9,
-    changeFrequency: 'monthly',
-    serviceName: 'Kamerarendszer javítás',
-    keywords: [
-      'kamerarendszer javítás Székesfehérvár',
-      'kamera szerelő',
-      'DVR javítás',
-      'NVR hibaelhárítás',
-    ],
+      'Kamerarendszer javítás Székesfehérváron: nincs kép, hibás kamera, rögzítési vagy elérési probléma — először azonosítjuk a rendszert.',
+    contentUpdatedAt: '2026-09-30',
+    keywords: ['kamerarendszer javítás Székesfehérvár', 'kamera javítás Székesfehérvár'],
   },
   {
-    path: '/kamerarendszer-bovites',
-    title: 'Kamerarendszer Bővítés és Korszerűsítés | Kamera Fehérvár',
+    path: '/kamerarendszer-tervezes',
+    title: 'Kamerarendszer tervezés Székesfehérváron | Kamera Fehérvár',
     description:
-      'Meglévő kamerarendszer bővítése új kamerákkal, rögzítő cseréje vagy analóg rendszer IP-re korszerűsítése Székesfehérváron és környékén.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.8,
-    changeFrequency: 'monthly',
-    serviceName: 'Kamerarendszer bővítés',
-    keywords: ['kamerarendszer bővítés', 'kamera korszerűsítés', 'DVR csere NVR-re'],
+      'Kamerarendszer tervezés: kamerák helye, látómező, rögzítési igény és hálózati feltételek a helyszín alapján.',
+    contentUpdatedAt: '2026-09-30',
   },
   {
-    path: '/ip-kamerarendszer',
-    title: 'IP Kamerarendszerek Székesfehérváron | Nagy Felbontás & Telefonos Rálátás',
+    path: '/csaladi-haz-nyaralo',
+    title: 'Kamera családi házra és nyaralóra | Kamera Fehérvár',
     description:
-      'Modern IP kamerarendszerek kiépítése 4K felbontással, éjszakai színes látással és mobiltelefonos élő képpel Székesfehérváron és Fejér vármegyében.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.8,
-    changeFrequency: 'monthly',
-    serviceName: 'IP kamerarendszerek',
-    keywords: ['IP kamera Székesfehérvár', 'PoE kamerarendszer', '4K biztonsági kamera'],
+      'Kamerarendszer családi házhoz és nyaralóhoz Székesfehérváron: bejárat, kapu, udvar; távoli ellenőrzés a hálózati feltételek szerint.',
+    contentUpdatedAt: '2026-09-30',
+    keywords: ['kamera családi ház Székesfehérvár'],
   },
   {
-    path: '/uzleti-kamerarendszer',
-    title: 'Üzleti Kamerarendszerek Cégeknek & Telephelyeknek | Székesfehérvár',
+    path: '/uzlet-telephely',
+    title: 'Kamerarendszer üzlethez és telephelyhez | Kamera Fehérvár',
     description:
-      'Ipari és üzleti kamerarendszerek irodáknak, üzleteknek, raktáraknak és telephelyeknek Székesfehérváron és Fejér vármegyében. Számlával, garanciával.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.8,
-    changeFrequency: 'monthly',
-    serviceName: 'Üzleti kamerarendszer',
-    keywords: ['üzleti kamerarendszer', 'raktár megfigyelés', 'bolt kamera Székesfehérvár'],
+      'Kamerás megfigyelés üzletbe és telephelyre Székesfehérváron — jogszerű használat feltételeinek figyelembevételével.',
+    contentUpdatedAt: '2026-09-30',
   },
   {
-    path: '/otthoni-kamerarendszer',
-    title: 'Otthoni Kamerarendszerek Családi Házaknak & Társasházaknak | Kamera Fehérvár',
+    path: '/kapcsolat',
+    title: 'Kapcsolat / ajánlatkérés | Kamera Fehérvár',
     description:
-      'Védje meg otthonát! Megbízható otthoni kamerarendszerek kiépítése és javítása Székesfehérváron. Bejárat, kert és garázs megfigyelése okostelefonos eléréssel.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.8,
-    changeFrequency: 'monthly',
-    serviceName: 'Otthoni kamerarendszer',
-    keywords: ['otthoni kamerarendszer', 'családi ház kamera Székesfehérvár', 'okos kamera otthonra'],
+      'Ajánlatkérés kamerarendszer tervezésre, telepítésre, bővítésre vagy javításra Székesfehérváron.',
+    contentUpdatedAt: '2026-09-30',
   },
   {
-    path: '/riaszto-es-beleptetes',
-    title: 'Riasztó és Beléptető Rendszerek Kiépítése | Kamera Fehérvár',
-    description:
-      'Komplex vagyonvédelem: riasztórendszerek, beléptetők és kaputelefonok szakszerű telepítése kamerarendszerrel kombinálva Székesfehérváron.',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.8,
-    changeFrequency: 'monthly',
-    serviceName: 'Riasztó és beléptetés',
-    keywords: ['riasztó és beléptetés', 'riasztótelepítés Székesfehérvár', 'beléptető rendszer'],
-  },
-  {
-    path: '/adatkezeles',
-    title: 'Adatkezelési Tájékoztató | Kamera Fehérvár',
-    description: 'Adatkezelési tájékoztató — Kamera Fehérvár (SIROTECH Kft.)',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.3,
-    changeFrequency: 'yearly',
+    path: '/adatvedelem',
+    title: 'Adatvédelmi tájékoztató | Kamera Fehérvár',
+    description: 'Adatvédelmi tájékoztató — Kamera Fehérvár (SIROTECH Kft.)',
+    contentUpdatedAt: '2026-09-30',
   },
   {
     path: '/aszf',
-    title: 'Általános Szerződési Feltételek (ÁSZF) | Kamera Fehérvár',
+    title: 'Általános Szerződési Feltételek | Kamera Fehérvár',
     description: 'Általános Szerződési Feltételek — Kamera Fehérvár (SIROTECH Kft.)',
-    contentUpdatedAt: '2026-09-24',
-    priority: 0.3,
-    changeFrequency: 'yearly',
+    contentUpdatedAt: '2026-09-30',
   },
+];
+
+/** Old URLs → canonical (or home). Used by next.config redirects. */
+export const urlMigrations: { from: string; to: string; permanent: boolean }[] = [
+  { from: '/kamerarendszer-telepites-szekesfehervar', to: '/kamerarendszer-telepites', permanent: true },
+  { from: '/kamerarendszer-javitas-szekesfehervar', to: '/kamerarendszer-javitas', permanent: true },
+  { from: '/kamerarendszer-bovites', to: '/kamerarendszer-javitas', permanent: true },
+  { from: '/ip-kamerarendszer', to: '/', permanent: true },
+  { from: '/uzleti-kamerarendszer', to: '/uzlet-telephely', permanent: true },
+  { from: '/otthoni-kamerarendszer', to: '/csaladi-haz-nyaralo', permanent: true },
+  { from: '/riaszto-es-beleptetes', to: '/', permanent: true },
+  { from: '/adatkezeles', to: '/adatvedelem', permanent: true },
 ];
 
 export function getRouteByPath(path: string): RouteConfig | undefined {
   return routeConfigs.find((r) => r.path === path);
 }
+
+export const navItems = [
+  { name: 'Telepítés', href: '/kamerarendszer-telepites' },
+  { name: 'Javítás', href: '/kamerarendszer-javitas' },
+  { name: 'Tervezés', href: '/kamerarendszer-tervezes' },
+  { name: 'Családi ház', href: '/csaladi-haz-nyaralo' },
+  { name: 'Üzlet', href: '/uzlet-telephely' },
+  { name: 'Kapcsolat', href: '/kapcsolat' },
+];

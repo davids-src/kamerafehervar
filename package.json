@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource/archivo": "^5.3.0",
     "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/source-sans-3": "^5.3.0",
     "@hookform/resolvers": "^3.9.0",
     "@netlify/plugin-nextjs": "^5.15.1",
     "@next/swc-wasm-nodejs": "13.5.1",

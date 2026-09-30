@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --navy: #1C3461;
-  --navy-deep: #14264B;
-  --accent: #D9482B;
-  --mist: #EEF2F8;
-  --paper: #FFFFFF;
-  --ink: #16223B;
-  --line: #D3DDEC;
+  --navy: #0e2238;
+  --navy-secondary: #153451;
+  --white: #ffffff;
+  --off-white: #f5f8fb;
+  --text: #17202a;
+  --muted: #647383;
+  --accent: #0068f0;
+  --accent-hover: #005acf;
+  --line: #d8e0ea;
 }
 
 * {
@@ -21,44 +23,37 @@ html {
 }
 
 body {
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  color: var(--ink);
-  background: var(--paper);
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--white);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Archivo', system-ui, sans-serif;
-  font-weight: 800;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Source Sans 3', system-ui, sans-serif;
+  font-weight: 700;
   line-height: 1.2;
-}
-
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  color: var(--navy);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
   html {
     scroll-behavior: auto;
   }
+  .animate-rise,
+  .animate-fade-in {
+    animation: none !important;
+  }
 }
 
-/* Remove default tap highlight on mobile */
-button, a {
+button,
+a {
   -webkit-tap-highlight-color: transparent;
 }
