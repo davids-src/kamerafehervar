@@ -7,10 +7,12 @@ export interface RouteConfig {
   keywords?: string[];
 }
 
-export const SITE_URL = 'https://kamerafehervar.hu';
-export const PHONE_DISPLAY = '+36 70 273 5532';
-export const PHONE_HREF = 'tel:+36702735532';
-export const EMAIL = 'szia@kamerafehervar.hu';
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_APP_URL || 'https://kamerafehervar.hu';
+export const PHONE_DISPLAY =
+  process.env.NEXT_PUBLIC_PHONE || process.env.NEXT_PUBLIC_SIRONIC_PHONE || '+36 70 273 5532';
+export const PHONE_HREF = `tel:${PHONE_DISPLAY.replace(/[\s-]/g, '')}`;
+export const EMAIL = process.env.NEXT_PUBLIC_EMAIL || 'szia@kamerafehervar.hu';
 
 /** Canonical routes only — sitemap and navigation derive from this list. */
 export const routeConfigs: RouteConfig[] = [

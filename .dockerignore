@@ -1,0 +1,16 @@
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+node_modules
+npm-debug.log
+.next
+.git
+.gitignore
+.env*.local
+.env
+.bolt
+README.md
+sitemap-diff.md
+url-migration-map.csv
+.vscode
+.idea
